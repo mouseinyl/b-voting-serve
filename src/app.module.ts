@@ -1,16 +1,16 @@
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { AuthService } from "./services/auth.service";
+import { AuthModule } from './routes/auth/auth.module';
+import { EventsModule } from './routes/eventos/eventos.module';
+import { CandidatosService } from './routes/candidatos/services/candidatos/candidatos.service';
+import { CandidatosModule } from './routes/candidatos/candidatos.module';
 
-// import { UserModule } from "./user/user.module";
-import { BlockChain } from "./services/blochainCode/blockChain.services";
-// import { UserController } from "./user/user.controller";
 
 @Module({
-  imports: [],
-  controllers: [AppController, ],
-  providers: [AppService, AuthService,BlockChain],
+  imports: [AuthModule, EventsModule, CandidatosModule, ],
+  controllers: [AppController,  ],
+  providers: [AppService, CandidatosService],
 })
 export class AppModule {}
 // 
