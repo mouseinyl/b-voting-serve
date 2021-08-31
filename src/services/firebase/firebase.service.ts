@@ -14,6 +14,24 @@ export class FirebaseService {
         this.User = this.fireStore.collection('Users')
     }
 
+    deleteUserData(uid) {
+        app.firestore().collection("Users").doc(uid).delete()
+    }
+
+    async findVotacion(votacion) {
+        console.log(votacion)
+        let resul
+        await (await app.firestore().collection('Users').get()).docs.forEach(
+            (x) => {
+                const i = x.data().block_1.length - 1;
+                const lastBlock = x.data().block_1[i];
+                const find = lastBlock.data.eventos.find((z) => z.ref == votacion)
+                if (find != undefined) { resul = x.id }
+            }
+        )
+        return resul;
+    }
+
     async getData(uid) {
         let data
 
@@ -25,7 +43,7 @@ export class FirebaseService {
     }
     async setData(uid, data) {
         let value
-        await this.User.doc(uid).get().then((x) => {
+        await this.User.doc(uid).get().then(() => {
             value = this.bc.addBlock(new Block(data))
         });
         await this.User.doc(uid).update({ block_1: JSON.parse(JSON.stringify(value)) })
@@ -44,7 +62,6 @@ export class FirebaseService {
     async createEventoDB(uid, evento) {
         // let events 
         await this.getData(uid).then((x) => {
-
             x.eventos.push(Object.assign(evento, { estado: "sin Iniciar" }));
             this.setData(uid, x).then(y => { })
         })
@@ -55,7 +72,7 @@ export class FirebaseService {
         // let events 
         let resulte
         await this.getData(uid).then((x) => {
-            let evento = x.eventos.filter((z) => z.nombre == evento_name)
+            const evento = x.eventos.filter((z) => z.nombre == evento_name)
             evento[0].estado = "iniciado"
             evento[0] = Object.assign(evento[0], { ref: 'b-voting@' + evento[0].nombre.replace(" ", "-") })
             resulte = x
@@ -67,7 +84,7 @@ export class FirebaseService {
         console.log("aqui")
         let resulte
         await this.getData(uid).then((x) => {
-            let evento = x.eventos.filter((z) => z.nombre == evento_name)
+            const evento = x.eventos.filter((z) => z.nombre == evento_name)
             evento[0].estado = "no iniciado"
             evento[0].ref = ''
             resulte = x

@@ -3,14 +3,12 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthModule } from './routes/auth/auth.module';
 import { EventsModule } from './routes/eventos/eventos.module';
-import { CandidatosService } from './routes/candidatos/services/candidatos/candidatos.service';
-import { CandidatosModule } from './routes/candidatos/candidatos.module';
-
+import { VotingModule } from './routes/voting/voting.module';
 
 @Module({
-  imports: [AuthModule, EventsModule, CandidatosModule, ],
+  imports: [AuthModule, EventsModule, VotingModule,  ],
   controllers: [AppController,  ],
-  providers: [AppService, CandidatosService],
+  providers: [AppService, ],
 })
 export class AppModule {}
 // 

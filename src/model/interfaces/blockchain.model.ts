@@ -7,6 +7,7 @@ export interface nodo {
 }
 
 export interface block {
+ 
   eventos: evento[];
   votantes: votante[];
   candidatos: candidato[];
@@ -19,17 +20,21 @@ export interface evento {
   fechaFin: string;
   votantes: votante[];
   candidatos: candidato[];
+  ref?:string;
+  estado?:string;
 }
 
 export interface votante {
   id: string;
   nombre: string;
+  makeVoto:boolean;
 }
 
 export interface candidato {
   nombre: string;
   apellido: string;
   partido: string;
+  votos?:number
 }
 
 export interface resultado {
