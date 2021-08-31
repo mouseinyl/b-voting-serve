@@ -28,13 +28,13 @@ export class VotingService {
         await this.firebase.getData(uid).then((x: block) => { e = x.eventos.find((z) => z.ref == votacion) })
         console.log(e)
         if (e == undefined) {
-            resultado = { message: "no exite", estado: false }
+            resultado = { message: "No perteneces A este evento", estado: false }
         } else {
             const _y: votante = e.votantes.find((y) => y.id == votante)
             if (_y.makeVoto == undefined) {
-                resultado = { message: "puede botar", estado: true }
+                resultado = { message: "Puedes realizar tu voto", estado: true }
             } else {
-                resultado = { message: "no puede botar", estado: false }
+                resultado = { message: "Ya has realizado tu voto", estado: false }
             }
         }
         return resultado;
@@ -64,7 +64,7 @@ export class VotingService {
                 result = this.firebase.setData(doc, x);
             })
             return {
-                data: { estado: true, message: "voto realizado" }
+                data: { estado: true, message: "Voto realizado correctamente" }
             }
 
         } else {
