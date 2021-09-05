@@ -50,7 +50,7 @@ export class FirebaseService {
         return true
     }
 
-
+  
 
     // 
     async getEventosDB(uid) {
